@@ -3,6 +3,7 @@ var shownImage = document.querySelector('.poster-img')
 var shownTitle = document.querySelector('.poster-title')
 var shownQuote = document.querySelector('.poster-quote')
 
+
 var mainPosterPage = document.querySelector('.main-poster')
 var savedPosterPage = document.querySelector('.saved-posters')
 var makePosterPage = document.querySelector('.poster-form')
@@ -12,12 +13,13 @@ var showSavedPostersButton = document.querySelector('.show-saved')
 var showRandomButton = document.querySelector('.show-random')
 var makePosterButton = document.querySelector('.show-form')
 var backToMainButton = document.querySelector(`.back-to-main`)
-var nevermindBackToMainButtom = document.querySelector('.show-main')
+var nevermindBackToMainButton = document.querySelector('.show-main')
 var showMyPosterButton = document.querySelector('.make-poster')
 
 var inputImageUrl = document.querySelector("#poster-image-url")
 var inputTitle = document.querySelector("#poster-title")
 var inputQuote = document.querySelector("#poster-quote")
+var grid = document.querySelector('.saved-posters-grid')
 
 
 // we've provided you with some data to work with 👇
@@ -128,11 +130,18 @@ makePosterButton.addEventListener('click',displayMakePoster)
 
 showSavedPostersButton.addEventListener('click', viewSavedPoster)
 
+showSavedPostersButton.addEventListener('click', makeGrid)
+  
+
 backToMainButton.addEventListener('click', viewSavedPoster)
 
-nevermindBackToMainButtom.addEventListener('click', displayMakePoster)
+nevermindBackToMainButton.addEventListener('click', displayMakePoster)
 
- showMyPosterButton.addEventListener('click', function(){
+savePosterButton.addEventListener('click', savePoster)
+
+// savePosterButton.addEventListener('click', updateCurrentPoster)
+
+showMyPosterButton.addEventListener('click', function(){
   event.preventDefault()
   createPoster()
   addInputToArrays()
@@ -146,34 +155,34 @@ nevermindBackToMainButtom.addEventListener('click', displayMakePoster)
 shownImage.src = images[getRandomIndex(images)]
 shownTitle.innerText = titles[getRandomIndex(titles)]
 shownQuote.innerText =quotes [getRandomIndex(quotes)]
+currentPoster = new Poster(shownImage.src, shownTitle.innerText, shownQuote.innerText);
 
 function createPoster(){
   imageURL =  inputImageUrl.value
   title = inputTitle.value
   quote = inputQuote.value
   currentPoster = new Poster(imageURL, title, quote)
-  console.log(currentPoster)
-  return currentPoster
+  return currentPoster 
 }
 
 function addInputToArrays(){
-  images.push( inputImageUrl.value)
+  images.push(inputImageUrl.value)
   titles.push(inputTitle.value)
   quotes.push(inputQuote.value)
-  console.log(images,titles,quotes)
 }
 
 function showCreatedPoster() {
-  console.log(currentPoster)
   shownImage.src = currentPoster.imageURL
   shownTitle.innerText = currentPoster.title
   shownQuote.innerText = currentPoster.quote
+
 }
 
 function randomize(){
 shownImage.src = images[getRandomIndex(images)]
 shownTitle.innerText = titles[getRandomIndex(titles)]
 shownQuote.innerText =quotes [getRandomIndex(quotes)]
+  currentPoster = new Poster(shownImage.src, shownTitle.innerText, shownQuote.innerText);
 }
 
 function viewSavedPoster() {
@@ -184,13 +193,33 @@ function viewSavedPoster() {
 function displayMakePoster() {
   mainPosterPage.classList.toggle("hidden")
   makePosterPage.classList.toggle("hidden")
-  console.log("running")
 }
 
 function testing(){
   event.preventDefault()
-  console.log("AAAAAAAAAAAAAAAAAA")
 }
+// Delete when done!
+
+function savePoster() {
+if (!savedPosters.includes(currentPoster)) {
+  savedPosters.push(currentPoster)
+}
+}
+
+function makeGrid() {
+  var miniPosterHTML = ""
+  for (var i =0; i < savedPosters.length; i++) {
+    miniPosterHTML += `
+      <section class="mini-poster">
+        <img src="${savedPosters[i].imageURL}" />
+        <h2>${savedPosters[i].title}</h2>
+        <h4>${savedPosters[i].quote} </h4>
+      </section>
+    `
+  }
+  grid.innerHTML = miniPosterHTML;
+}
+
 
 
 // (we've provided one for you to get you started)!
@@ -198,4 +227,3 @@ function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
 }
 
-console.log("hello")
