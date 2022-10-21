@@ -12,7 +12,7 @@ var showSavedPostersButton = document.querySelector('.show-saved')
 var showRandomButton = document.querySelector('.show-random')
 var makePosterButton = document.querySelector('.show-form')
 var backToMainButton = document.querySelector(`.back-to-main`)
-var nevermindBackToMainButtom = document.querySelector('.show-main')
+var nevermindBackToMainButton = document.querySelector('.show-main')
 var showMyPosterButton = document.querySelector('.make-poster')
 
 var inputImageUrl = document.querySelector("#poster-image-url")
@@ -130,9 +130,11 @@ showSavedPostersButton.addEventListener('click', viewSavedPoster)
 
 backToMainButton.addEventListener('click', viewSavedPoster)
 
-nevermindBackToMainButtom.addEventListener('click', displayMakePoster)
+nevermindBackToMainButton.addEventListener('click', displayMakePoster)
 
- showMyPosterButton.addEventListener('click', function(){
+savePosterButton.addEventListener('click', savePoster)
+
+showMyPosterButton.addEventListener('click', function(){
   event.preventDefault()
   createPoster()
   addInputToArrays()
@@ -146,21 +148,20 @@ nevermindBackToMainButtom.addEventListener('click', displayMakePoster)
 shownImage.src = images[getRandomIndex(images)]
 shownTitle.innerText = titles[getRandomIndex(titles)]
 shownQuote.innerText =quotes [getRandomIndex(quotes)]
+currentPoster = new Poster(shownImage.src, shownTitle.innerText, shownQuote.innerText);
 
 function createPoster(){
   imageURL =  inputImageUrl.value
   title = inputTitle.value
   quote = inputQuote.value
   currentPoster = new Poster(imageURL, title, quote)
-  console.log(currentPoster)
-  return currentPoster
+  return currentPoster 
 }
 
 function addInputToArrays(){
-  images.push( inputImageUrl.value)
+  images.push(inputImageUrl.value)
   titles.push(inputTitle.value)
   quotes.push(inputQuote.value)
-  console.log(images,titles,quotes)
 }
 
 function showCreatedPoster() {
@@ -184,12 +185,20 @@ function viewSavedPoster() {
 function displayMakePoster() {
   mainPosterPage.classList.toggle("hidden")
   makePosterPage.classList.toggle("hidden")
-  console.log("running")
 }
 
 function testing(){
   event.preventDefault()
-  console.log("AAAAAAAAAAAAAAAAAA")
+}
+// Delete when done!
+
+function savePoster(){
+  console.log(savedPosters)
+  console.log("current poster" , currentPoster)
+if (!savedPosters.includes(currentPoster)) {
+  savedPosters.push(currentPoster)
+}
+
 }
 
 
@@ -198,4 +207,3 @@ function getRandomIndex(array) {
   return Math.floor(Math.random() * array.length);
 }
 
-console.log("hello")
