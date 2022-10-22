@@ -18,12 +18,8 @@ var showMyPosterButton = document.querySelector('.make-poster')
 var inputImageUrl = document.querySelector("#poster-image-url")
 var inputTitle = document.querySelector("#poster-title")
 var inputQuote = document.querySelector("#poster-quote")
+
 var grid = document.querySelector('.saved-posters-grid')
-
-
-
-
-
 
 // we've provided you with some data to work with 👇
 var images = [
@@ -123,7 +119,9 @@ var quotes = [
   "Each person must live their life as a model for others.",
   "A champion is defined not by their wins but by how they can recover when they fall."
 ];
-var savedPosters = [];
+
+// Variable Declarations
+var savedPosters = []
 var currentPoster 
 var idPosterDelete 
 
@@ -136,14 +134,11 @@ showSavedPostersButton.addEventListener('click', viewSavedPoster)
 
 showSavedPostersButton.addEventListener('click', makeGrid)
   
-
 backToMainButton.addEventListener('click', viewSavedPoster)
 
 nevermindBackToMainButton.addEventListener('click', displayMakePoster)
 
 savePosterButton.addEventListener('click', savePoster)
-
-// savePosterButton.addEventListener('click', updateCurrentPoster)
 
 showMyPosterButton.addEventListener('click', function(){
   event.preventDefault()
@@ -159,16 +154,15 @@ grid.addEventListener('dblclick', function(){
 }
 )
 
-// showMyPosterButton.addEventListener('click', testing)
-
 // functions and event handlers go here 👇
 
+//Run on page load
 shownImage.src = images[getRandomIndex(images)]
 shownTitle.innerText = titles[getRandomIndex(titles)]
 shownQuote.innerText =quotes [getRandomIndex(quotes)]
 currentPoster = new Poster(shownImage.src, shownTitle.innerText, shownQuote.innerText);
 
-function createPoster(){
+function createPoster() {
   imageURL =  inputImageUrl.value
   title = inputTitle.value
   quote = inputQuote.value
@@ -176,7 +170,7 @@ function createPoster(){
   return currentPoster 
 }
 
-function addInputToArrays(){
+function addInputToArrays() {
   images.push(inputImageUrl.value)
   titles.push(inputTitle.value)
   quotes.push(inputQuote.value)
@@ -186,13 +180,12 @@ function showCreatedPoster() {
   shownImage.src = currentPoster.imageURL
   shownTitle.innerText = currentPoster.title
   shownQuote.innerText = currentPoster.quote
-
 }
 
-function randomize(){
-shownImage.src = images[getRandomIndex(images)]
-shownTitle.innerText = titles[getRandomIndex(titles)]
-shownQuote.innerText =quotes [getRandomIndex(quotes)]
+function randomize() {
+  shownImage.src = images[getRandomIndex(images)]
+  shownTitle.innerText = titles[getRandomIndex(titles)]
+  shownQuote.innerText =quotes [getRandomIndex(quotes)]
   currentPoster = new Poster(shownImage.src, shownTitle.innerText, shownQuote.innerText);
 }
 
@@ -206,16 +199,10 @@ function displayMakePoster() {
   makePosterPage.classList.toggle("hidden")
 }
 
-function testing(){
-  event.preventDefault()
-  console.log("Running")
-}
-// Delete when done!
-
 function savePoster() {
-if (!savedPosters.includes(currentPoster)) {
-  savedPosters.push(currentPoster)
-}
+  if (!savedPosters.includes(currentPoster)) {
+    savedPosters.push(currentPoster)
+  }
 }
 
 function makeGrid() {
@@ -228,27 +215,19 @@ function makeGrid() {
       <h4>${savedPosters[i].quote} </h4>
       </section>
       `
-    }
-    grid.innerHTML = miniPosterHTML;
   }
+  grid.innerHTML = miniPosterHTML;
+}
   
-function removePosterFromSaved(){
+function removePosterFromSaved() {
   var selectedPoster = event.target.parentNode.id || event.target.id
-  console.log(event.target)
-  console.log(selectedPoster)
-  for (var i = 0; i<savedPosters.length;i++){
-    if(savedPosters[i].id.toString() === selectedPoster){
-      console.log("Inside if")
+  for (var i = 0; i<savedPosters.length;i++) {
+    if(savedPosters[i].id.toString() === selectedPoster) {
       savedPosters.splice(i,1)
       return savedPosters
-    } else {
-      console.log(savedPosters[i].id)
-      console.log("outside if")
     }
   }
 }
-  
-  // <div id="${savedPoster[i].id}"></div>
 
 // (we've provided one for you to get you started)!
 function getRandomIndex(array) {
