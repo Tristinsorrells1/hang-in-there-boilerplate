@@ -3,7 +3,6 @@ var shownImage = document.querySelector('.poster-img')
 var shownTitle = document.querySelector('.poster-title')
 var shownQuote = document.querySelector('.poster-quote')
 
-
 var mainPosterPage = document.querySelector('.main-poster')
 var savedPosterPage = document.querySelector('.saved-posters')
 var makePosterPage = document.querySelector('.poster-form')
@@ -20,6 +19,10 @@ var inputImageUrl = document.querySelector("#poster-image-url")
 var inputTitle = document.querySelector("#poster-title")
 var inputQuote = document.querySelector("#poster-quote")
 var grid = document.querySelector('.saved-posters-grid')
+
+
+
+
 
 
 // we've provided you with some data to work with 👇
@@ -122,6 +125,7 @@ var quotes = [
 ];
 var savedPosters = [];
 var currentPoster 
+var idPosterDelete 
 
 // event listeners go here 👇
 showRandomButton.addEventListener('click', randomize)
@@ -148,6 +152,13 @@ showMyPosterButton.addEventListener('click', function(){
   showCreatedPoster()
   displayMakePoster()
 })
+
+grid.addEventListener('dblclick', function(){
+  removePosterFromSaved()
+  makeGrid()
+}
+)
+
 // showMyPosterButton.addEventListener('click', testing)
 
 // functions and event handlers go here 👇
@@ -197,6 +208,7 @@ function displayMakePoster() {
 
 function testing(){
   event.preventDefault()
+  console.log("Running")
 }
 // Delete when done!
 
@@ -210,17 +222,32 @@ function makeGrid() {
   var miniPosterHTML = ""
   for (var i =0; i < savedPosters.length; i++) {
     miniPosterHTML += `
-      <section class="mini-poster">
-        <img src="${savedPosters[i].imageURL}" />
-        <h2>${savedPosters[i].title}</h2>
-        <h4>${savedPosters[i].quote} </h4>
+      <section class="mini-poster" id="${savedPosters[i].id}">
+      <img src="${savedPosters[i].imageURL}" />
+      <h2>${savedPosters[i].title}</h2>
+      <h4>${savedPosters[i].quote} </h4>
       </section>
-    `
+      `
+    }
+    grid.innerHTML = miniPosterHTML;
   }
-  grid.innerHTML = miniPosterHTML;
+  
+function removePosterFromSaved(){
+  var selectedPoster = event.target.parentNode.id
+  console.log(selectedPoster)
+  for (var i = 0; i<savedPosters.length;i++){
+    if(savedPosters[i].id.toString() === selectedPoster){
+      console.log("Inside if")
+      savedPosters.splice(i,1)
+      return savedPosters
+    } else {
+      console.log(savedPosters[i].id)
+      console.log("outside if")
+    }
+  }
 }
-
-
+  
+  // <div id="${savedPoster[i].id}"></div>
 
 // (we've provided one for you to get you started)!
 function getRandomIndex(array) {
