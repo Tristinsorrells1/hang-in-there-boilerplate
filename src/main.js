@@ -233,7 +233,8 @@ function makeGrid() {
   }
   
 function removePosterFromSaved(){
-  var selectedPoster = event.target.parentNode.id
+  var selectedPoster = event.target.parentNode.id || event.target.id
+  console.log(event.target)
   console.log(selectedPoster)
   for (var i = 0; i<savedPosters.length;i++){
     if(savedPosters[i].id.toString() === selectedPoster){
